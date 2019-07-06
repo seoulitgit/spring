@@ -1,5 +1,5 @@
 package com.j2eearchitect.helloworld;
-
+// 충돌예제
 public class HelloWorldClient {
 	public static void main(String[] args) {
 		
