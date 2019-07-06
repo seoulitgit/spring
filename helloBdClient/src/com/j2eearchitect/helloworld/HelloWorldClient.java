@@ -1,5 +1,5 @@
 package com.j2eearchitect.helloworld;
-
+// local conflict Å×½ºÆ®
 public class HelloWorldClient {
 	public static void main(String[] args) {
 		
