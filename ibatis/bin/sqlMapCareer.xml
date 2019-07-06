@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQLMap 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Career">
+	<typeAlias alias="CareerBeans" type="com.seoulit.career.model.CareerBeans"/>
+	
+	<parameterMap id="careerParameterMap" class="CareerBeans">
+    	<parameter property="period"  jdbcType="VARCHAR"/>
+    	<parameter property="employment"  jdbcType="VARCHAR"/>
+    	<parameter property="position"  jdbcType="VARCHAR"/>
+    	<parameter property="work"  jdbcType="VARCHAR"/>
+    	<parameter property="reason"  jdbcType="VARCHAR"/>
+    	<parameter property="empId"  jdbcType="VARCHAR"/>
+    	<parameter property="code"  jdbcType="VARCHAR"/>
+    </parameterMap>
+ 
+	<select id="selectCareer" resultClass="CareerBeans">
+		select period, employment, position, work, reason, emp_id as empId, code
+		from career_info where emp_id=#empId#
+	</select>	
+	 
+	 <insert id="insertCareer" parameterMap="careerParameterMap">
+	 	<selectKey keyProperty="code" resultClass="string">
+			select career_seq.nextval from dual
+		</selectKey>
+		insert into career_info (period, employment, position, work, reason, emp_id, code)
+		VALUES (?, ?, ?, ?, ?, ?, ?)
+	</insert>
+	 
+	<update id="updateCareer" parameterClass="CareerBeans" >
+		update career_info set
+			period = #period#, employment = #employment#, position = #position#,
+			work = #work#, reason = #reason#
+		where code = #code#
+	</update>
+					
+	<delete id="deleteCareer" >
+		delete from career_info where code = #code#
+	</delete>	
+</sqlMap>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQLMap 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Emp">
+	<typeAlias alias="EmpBeans" type="com.seoulit.emp.model.EmpBeans"/>
+	
+	<parameterMap id="empParameterMap" class="EmpBeans">
+    	<parameter property="name"  jdbcType="VARCHAR"/>
+    	<parameter property="empId"  jdbcType="VARCHAR"/>
+    	<parameter property="dept"  jdbcType="VARCHAR"/>
+    	<parameter property="jikup"  jdbcType="VARCHAR"/>
+    	<parameter property="sex"  jdbcType="CHAR"/>
+    	<parameter property="phone"  jdbcType="VARCHAR"/>
+    	<parameter property="email"  jdbcType="VARCHAR"/>
+    	<parameter property="address"  jdbcType="VARCHAR"/>
+    	<parameter property="hiredate"  jdbcType="VARCHAR"/>
+    	<parameter property="zipcode"  jdbcType="VARCHAR"/>
+    	<parameter property="image"  jdbcType="VARCHAR"/>
+    </parameterMap>
+    
+    <resultMap id="resultEmpMap" class="EmpBeans">
+    	<result property="name"  column="NAME"/>
+    	<result property="empId"  column="EMP_ID"/>
+    	<result property="dept"  column="DEPT"/>
+    	<result property="jikup"  column="JIKUP"/>
+    	<result property="sex"  column="SEX"/>
+    	<result property="phone"  column="PHONE"/>
+    	<result property="email"  column="EMAIL"/>
+    	<result property="address"  column="ADDRESS"/>
+    	<result property="hiredate"  column="HIREDATE"/>
+    	<result property="zipcode"  column="ZIPCODE"/>
+    	<result property="image"  column="IMAGE"/>
+    	<result property="education"
+			select="Education.selectEducation"
+			column="EMP_ID"/>
+		<result property="career"
+			select="Career.selectCareer"
+			column="EMP_ID"/>
+    	<result property="license"
+			select="License.selectLicense"
+			column="EMP_ID"/>
+		<result property="family"
+			select="Family.selectFamily"
+			column="EMP_ID"/>
+    </resultMap>
+	
+	<select id="loginEmp" resultClass="string">
+		select pw from manager where id=#empId#
+	</select>
+	 
+	<select id="selectEmp" resultMap="resultEmpMap">
+		select  name, emp_id, dept, jikup, sex, phone, email, address, hiredate, zipcode, image
+		from emp_info where name like '%'||#name#||'%'
+	</select>	
+	 
+	<insert id="insertEmp" parameterMap="empParameterMap">
+		insert into emp_info (name, emp_id, dept, jikup, sex, phone, email, address, hiredate, zipcode, image)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	</insert>
+	 
+	<update id="updateEmp" parameterClass="EmpBeans" >
+		update emp_info set
+			name = #name:VARCHAR#, dept = #dept:NUMBER#, jikup = #jikup#, sex = #sex#, phone = #phone#,
+			email = #email#, address = #address#, zipcode = #zipcode#, image = #image#
+		where emp_id = #empId#
+	</update>
+					
+	<delete id="deleteEmp" >
+		delete from emp_info where emp_id = #empId#
+	</delete>
+	
+	<select id="searchEmp" parameterClass="string" resultMap="resultEmpMap">
+		select name, emp_id, dept, jikup, sex, phone, email, address, hiredate, zipcode, image
+		from emp_info where name like '%'||#name#||'%'
+	</select>	
+</sqlMap>

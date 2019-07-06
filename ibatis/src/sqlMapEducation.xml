@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQLMap 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Education">
+	<typeAlias alias="EducationBeans" type="com.seoulit.education.model.EducationBeans"/>
+	
+	<parameterMap id="educationParameterMap" class="EducationBeans">
+    	<parameter property="entrance"  jdbcType="VARCHAR"/>
+    	<parameter property="graduate"  jdbcType="VARCHAR"/>
+    	<parameter property="school"  jdbcType="VARCHAR"/>
+    	<parameter property="department"  jdbcType="VARCHAR"/>
+    	<parameter property="division"  jdbcType="VARCHAR"/>
+    	<parameter property="grade"  jdbcType="VARCHAR"/>
+    	<parameter property="location"  jdbcType="VARCHAR"/>
+    	<parameter property="empId"  jdbcType="VARCHAR"/>
+    	<parameter property="code"  jdbcType="VARCHAR"/>
+    </parameterMap>
+ 
+	<select id="selectEducation" resultClass="EducationBeans">
+		select entrance, graduate, school, department, division, grade, location, emp_id as empId, code
+		from education_info where emp_id=#empId#
+	</select>	
+	 
+	 <insert id="insertEducation" parameterMap="educationParameterMap">
+	 	<selectKey keyProperty="code" resultClass="string">
+			select education_seq.nextval from dual
+		</selectKey>
+		insert into education_info (entrance, graduate, school, department, division, grade, location, emp_id, code)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+	</insert>
+	 
+	<update id="updateEducation" parameterClass="EducationBeans" >
+		update education_info set
+			entrance = #entrance#, graduate = #graduate#, school = #school#, department = #department#,
+			division = #division#, grade = #grade#, location = #location#
+		where code = #code#
+	</update>
+					
+	<delete id="deleteEducation" >
+		delete from education_info where code = #code#
+	</delete>	
+</sqlMap>

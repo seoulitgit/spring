@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/antlr.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/beanaction.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/commons-digester.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/commons-validator.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/ibatis-common-2.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/ibatis-dao-2.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/ibatis-sqlmap-2.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/jakarta-oro.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/mysql-connector-java-3.1.13-bin.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/standard.jar"/>
+	<classpathentry kind="lib" path="G:/dev/workspace_weblogic/ibatis/lib/struts.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre8"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

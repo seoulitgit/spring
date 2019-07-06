@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<insert id="insertSequence">
+		insert into account2 (username, password)
+		values ( #userName#, #password#)
+		<selectKey keyProperty="accountId" resultClass="int">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+</sqlMap>

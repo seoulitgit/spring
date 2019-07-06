@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<configuration xmlns='http://logging.apache.org/'>
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%p - %m%n"/>        
+        </layout>
+    </appender>  
+	
+    <logger name="org.apache">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="com.seoulit">
+        <level value="DEBUG"/>
+    </logger>	
+
+    <root>
+        <level value="WARN"/>
+		<appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>

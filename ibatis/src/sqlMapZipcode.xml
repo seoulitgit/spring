@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQLMap 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Zipcode">
+	<typeAlias alias="ZipcodeBeans" type="com.seoulit.zipcode.model.ZipcodeBeans"/>
+	
+	<parameterMap id="zipcodeParameterMap" class="ZipcodeBeans">
+    	<parameter property="zipcode"  jdbcType="VARCHAR"/>
+    	<parameter property="sido"  jdbcType="VARCHAR"/>
+    	<parameter property="gugun"  jdbcType="VARCHAR"/>
+    	<parameter property="dong"  jdbcType="VARCHAR"/>
+    	<parameter property="bunji"  jdbcType="VARCHAR"/>
+    </parameterMap>
+ 
+	<select id="searchZipcode" resultClass="ZipcodeBeans">
+		select zipcode, sido, gugun, dong, bunji from zipcode_info where dong like '%'||#dong#||'%'
+	</select>	
+</sqlMap>

@@ -1,0 +1,91 @@
+package com.seoulit.common.advice;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+import com.seoulit.common.exception.DataAccessException;
+import com.seoulit.common.transaction.DataSourceTransactionManager;
+
+public class CommonAdvice {
+
+	protected final Log logger = LogFactory.getLog(getClass());
+
+	private DataSourceTransactionManager dataSourceTransactionManager; 
+
+	public void setDataSourceTransactionManager(
+
+			DataSourceTransactionManager dataSourceTransactionManager) {
+
+		this.dataSourceTransactionManager = dataSourceTransactionManager;
+
+	}
+
+	public Object loggingAdvicePojo(ProceedingJoinPoint joinPoint) throws Throwable {
+
+		String methodName = joinPoint.getSignature().getName();
+
+		String className = joinPoint.getTarget().getClass().getName();
+
+		if (logger.isDebugEnabled()) {
+
+			logger.debug(className + "." + methodName
+
+					+ "()" + " 메서드 시작!!");
+
+	}
+
+		Object retVal = joinPoint.proceed();
+
+		if (logger.isDebugEnabled()) {
+			logger.debug(className + "." + methodName
+					+ "()" + " 메서드 종료!!");
+		}
+		return retVal;
+	}
+
+	public void dataAccessThrowsAdvicePojo(DataAccessException ex) throws Throwable {
+
+		if (logger.isFatalEnabled()) {
+			logger.fatal("afterThrowing() 시작");
+			logger.fatal("Caught : " + ex.getClass().getName());
+		}
+		if (logger.isErrorEnabled()) {
+			logger.error(ex.getMessage());
+		}
+		if (logger.isFatalEnabled()) {
+			logger.fatal("afterThrowing() 종료");
+		}
+		throw ex;
+	}
+
+	public Object transactionAdvicePojo(ProceedingJoinPoint joinPoint) throws Throwable {
+
+		String methodName = joinPoint.getSignature().getName();
+		String className = joinPoint.getTarget().getClass().getName();
+		try{
+			dataSourceTransactionManager.beginTransaction();
+			if( logger.isDebugEnabled() ) {
+				logger.debug(className + "." + methodName
+						+ "()  beginTransaction !!");
+			}
+
+			Object retVal = joinPoint.proceed();
+
+			dataSourceTransactionManager.commitTransaction();
+			if( logger.isDebugEnabled() ) {
+				logger.debug(className + "." + methodName
+						+ "() commitTransaction!!");
+			}
+			return retVal;
+
+		}catch(DataAccessException ex){
+			dataSourceTransactionManager.rollbackTransaction();
+			if( logger.isDebugEnabled() ) {
+				logger.debug(className + "." + methodName
+						+ "() rollbackTransaction!!");
+			}
+			throw ex;
+		}
+	}
+}

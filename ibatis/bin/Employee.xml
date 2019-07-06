@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="employee">
+    <typeAlias alias="emp" type="test.Employee"/>
+	<select id="getEmployee" parameterClass="int"
+		resultClass="emp">
+		SELECT ID ,
+		EMPLOYEE_NUMBER as employeeNumber,
+		FIRST_NAME as firstName,
+		LAST_NAME as lastName,TITLE 
+		FROM EMPLOYEE
+		WHERE EMPLOYEE_NUMBER = #empNum#
+	</select>
+</sqlMap>

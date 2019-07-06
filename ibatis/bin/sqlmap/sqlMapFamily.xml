@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQLMap 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Family">
+	<typeAlias alias="FamilyBeans" type="com.seoulit.family.model.FamilyBeans"/>
+	
+	<parameterMap id="familyParameterMap" class="FamilyBeans">
+    	<parameter property="relation"  jdbcType="VARCHAR"/>
+    	<parameter property="name"  jdbcType="VARCHAR"/>
+    	<parameter property="birth"  jdbcType="VARCHAR"/>
+    	<parameter property="academic"  jdbcType="VARCHAR"/>
+    	<parameter property="job"  jdbcType="VARCHAR"/>
+    	<parameter property="liveCheck"  jdbcType="VARCHAR"/>
+    	<parameter property="empId"  jdbcType="VARCHAR"/>
+    	<parameter property="code"  jdbcType="VARCHAR"/>
+    </parameterMap>
+    
+   <resultMap id="resultFamilyMap" class="FamilyBeans" groupBy="code">
+    	<result property="relation"  column="RELATION"/>
+    	<result property="name"  column="FNAME"/>
+    	<result property="birth"  column="BIRTH"/>
+    	<result property="academic"  column="ACADEMIC"/>
+    	<result property="job"  column="JOB"/>
+    	<result property="liveCheck"  column="LIVECHECK"/>
+    	<result property="empId"  column="EMPID"/>
+    	<result property="code"  column="FCODE"/>
+    </resultMap>
+	 
+	 <insert id="insertFamily" parameterMap="familyParameterMap">
+	 	<selectKey keyProperty="code" resultClass="string">
+			select family_seq.nextval from dual
+		</selectKey>
+		insert into family_info (relation, name, birth, academic, job, live_check, emp_id, code)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+	</insert>
+	 
+	<update id="updateFamily" parameterClass="FamilyBeans" >
+		update family_info set
+			relation = #relation#, name = #name#, birth = #birth#, 
+			academic = #academic#, job = #job#, live_check = #liveCheck#
+		where code = #code#
+	</update>
+					
+	<delete id="deleteFamily" >
+		delete from family_info where code = #code#
+	</delete>	
+</sqlMap>

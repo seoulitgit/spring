@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<parameterMap id="transferCashMap" class="map">
+		<parameter property="sid" mode="IN" />
+		<parameter property="rid" mode="IN" />
+		<parameter property="money"  mode="IN" />
+		<parameter property="error_code"  jdbcType="VARCHAR"  mode="OUT" />
+		<parameter property="error_msg"  jdbcType="VARCHAR"  mode="OUT" />
+	</parameterMap>
+ <procedure id="transferCash" parameterMap="transferCashMap">
+		{ call transfer_account (?,?,?,?,?) }
+  </procedure>
+
+</sqlMap>

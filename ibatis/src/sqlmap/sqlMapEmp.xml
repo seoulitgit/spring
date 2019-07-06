@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQLMap 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Emp">
+	<typeAlias alias="EmpBeans" type="com.seoulit.emp.model.EmpBeans"/>
+	
+	<parameterMap id="empParameterMap" class="EmpBeans">
+    	<parameter property="name"  jdbcType="VARCHAR"/>
+    	<parameter property="empId"  jdbcType="VARCHAR"/>
+    	<parameter property="dept"  jdbcType="VARCHAR"/>
+    	<parameter property="jikup"  jdbcType="VARCHAR"/>
+    	<parameter property="sex"  jdbcType="CHAR"/>
+    	<parameter property="phone"  jdbcType="VARCHAR"/>
+    	<parameter property="email"  jdbcType="VARCHAR"/>
+    	<parameter property="address"  jdbcType="VARCHAR"/>
+    	<parameter property="hiredate"  jdbcType="VARCHAR"/>
+    	<parameter property="zipcode"  jdbcType="VARCHAR"/>
+    	<parameter property="image"  jdbcType="VARCHAR"/>
+    </parameterMap>
+    
+    <resultMap id="resultEmpMap" class="EmpBeans" groupBy="empId">
+    	<result property="name"  column="NAME"/>
+    	<result property="empId"  column="EMPID"/>
+    	<result property="dept"  column="DEPT"/>
+    	<result property="jikup"  column="JIKUP"/>
+    	<result property="sex"  column="SEX"/>
+    	<result property="phone"  column="PHONE"/>
+    	<result property="email"  column="EMAIL"/>
+    	<result property="address"  column="ADDRESS"/>
+    	<result property="hiredate"  column="HIREDATE"/>
+    	<result property="zipcode"  column="ZIPCODE"/>
+    	<result property="image"  column="IMAGE"/>
+    	<result property="education"
+			resultMap="Education.resultEducationMap"/>
+		<result property="career"
+			resultMap="Career.resultCareerMap"/>
+    	<result property="license"
+			resultMap="License.resultLicenseMap"/>
+		<result property="family"
+			resultMap="Family.resultFamilyMap"/>
+    </resultMap>
+	 
+	<select id="selectEmp" resultMap="resultEmpMap">
+		select  e.name, e.emp_id as empId, e.dept, e.jikup, e.sex, e.phone, 
+					e.email, e.address, e.hiredate, e.zipcode, e.image,
+					edu.entrance, edu.graduate, edu.school, edu.department, edu.division, 
+					edu.grade, edu.location, edu.emp_id as empId, edu.code as educode,
+					c.period, c.employment, c.position, c.work, c.reason, c.emp_id as empId, c.code as ccode,
+					l.license, l.num, l.acquisition, l.grade as lgrade, l.emp_id as empId, l.code as lcode,
+					f.relation, f.name as fname, f.birth, f.academic, f.job, 
+					f.live_check as liveCheck, f.emp_id as empId, f.code as fcode
+		from emp_info e, education_info edu, career_info c, license_info l, family_info f
+		where e.emp_id = edu.emp_id(+)
+		and 	e.emp_id = c.emp_id(+)
+		and 	e.emp_id = l.emp_id(+)
+		and	e.emp_id = f.emp_id(+)
+		and e.name like '%'||#name#||'%'
+	</select>	
+	 
+	<insert id="insertEmp" parameterMap="empParameterMap">
+		insert into emp_info (name, emp_id, dept, jikup, sex, phone, email, address, hiredate, zipcode, image)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	</insert>
+	 
+	<update id="updateEmp" parameterClass="EmpBeans" >
+		update emp_info set
+			name = #name#, dept = #dept#, jikup = #jikup#, sex = #sex#, phone = #phone#,
+			email = #email#, address = #address#, zipcode = #zipcode#, image = #image#
+		where emp_id = #empId#
+	</update>
+					
+	<delete id="deleteEmp" >
+		delete from emp_info where emp_id = #empId#
+	</delete>
+	
+	<select id="searchEmp" resultMap="resultEmpMap">
+		select name, emp_id as empId, dept, jikup, sex, phone, email, address, hiredate, zipcode, image
+		from emp_info where name like '%'||#name#||'%'
+	</select>	
+</sqlMap>
