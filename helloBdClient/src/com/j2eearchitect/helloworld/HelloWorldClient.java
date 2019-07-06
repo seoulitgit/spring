@@ -1,7 +1,7 @@
 package com.j2eearchitect.helloworld;
 // local conflict 테스트
 // remote conflict 테스트
-//reset 체크
+
 public class HelloWorldClient {
 	public static void main(String[] args) {
 		
